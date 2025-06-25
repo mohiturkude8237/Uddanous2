@@ -266,7 +266,7 @@ const categories = [
 
 const Categorycard = () => {
   return (
-    <div className="px-6 md:px-16 py-12 bg-gradient-to-br from-gray-800 via-gray-900 to-white animate-fade-in">
+    <div className="px-6 md:px-16 py-12 bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 animate-fade-in">
       {/* Main Heading */}
       <h1 className="text-center text-5xl font-extrabold text-white relative inline-block mb-12">
         Supporting Lives, One Step at a Time
