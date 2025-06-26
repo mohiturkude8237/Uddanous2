@@ -106,10 +106,10 @@
 import React, { useEffect, useState } from "react";
 
 const stats = [
-  { label: "Fund Raised", start: 8400, value: 8803 },
-  { label: "Volunteers", start: 80, value: 480 },
-  { label: "Causes for Donation", start: 5800, value: 6208 },
-  { label: "Happy People", start: 560, value: 960 },
+  { label: "Fund Raised", start: 8000, value: 8803 },
+  { label: "Volunteers", start: 1, value: 480 },
+  { label: "Causes for Donation", start: 5200, value: 6208 },
+  { label: "Happy People", start: 1, value: 960 },
 ];
 
 const StatBox = ({ label, value, start }) => {
