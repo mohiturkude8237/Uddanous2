@@ -5,7 +5,7 @@ import StatsCounter from './components/Statscounter'
 
 const App = () => {
   return (
-    <div>
+    <div className='overflow-x-hidden'>
       <Categorycard/>
       <StatsCounter/>
     </div>
