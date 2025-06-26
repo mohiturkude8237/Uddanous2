@@ -103,36 +103,111 @@
 
 // export default StatsCounter;
 
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 
+// const stats = [
+//   { label: "Fund Raised", start: 8000, value: 8803 },
+//   { label: "Volunteers", start: 1, value: 480 },
+//   { label: "Causes for Donation", start: 5200, value: 6208 },
+//   { label: "Happy People", start: 1, value: 960 },
+// ];
+
+// const StatBox = ({ label, value, start }) => {
+//   const [count, setCount] = useState(start);
+
+//   useEffect(() => {
+//     const duration = 2000;
+//     const totalSteps = value - start;
+//     const incrementTime = totalSteps > 0 ? duration / totalSteps : duration;
+
+//     const interval = setInterval(() => {
+//       setCount((prev) => {
+//         if (prev < value) return prev + 1;
+//         clearInterval(interval);
+//         return value;
+//       });
+//     }, incrementTime);
+
+//     return () => clearInterval(interval);
+//   }, [value, start]);
+
+//   return (
+//     <div className="flex-1 min-w-[250px] text-center px-6 py-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+//       <h2 className="text-5xl sm:text-6xl font-extrabold text-white drop-shadow tracking-wide">
+//         {count}
+//       </h2>
+//       <p className="text-white mt-3 text-lg sm:text-xl font-medium">{label}</p>
+//     </div>
+//   );
+// };
+
+// const StatsCounter = () => {
+//   return (
+//     <div className="mt-6 mb-10 relative px-4 py-10 bg-gray-900 rounded-t-[5rem] sm:rounded-full max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-6 sm:gap-8 shadow-2xl overflow-hidden">
+//       <div className="absolute inset-0 opacity-10 bg-[url('/bg-pattern.svg')] bg-cover bg-center pointer-events-none rounded-t-[5rem] sm:rounded-full" />
+      
+//       {stats.map((item, index) => (
+//         <StatBox
+//           key={index}
+//           label={item.label}
+//           value={item.value}
+//           start={item.start}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default StatsCounter;
+
+import React, { useEffect, useRef, useState } from "react";
+
+// Stat data
 const stats = [
-  { label: "Fund Raised", start: 8000, value: 8803 },
-  { label: "Volunteers", start: 1, value: 480 },
-  { label: "Causes for Donation", start: 5200, value: 6208 },
-  { label: "Happy People", start: 1, value: 960 },
+  { label: "Fund Raised", start: 8400, value: 8803 },
+  { label: "Volunteers", start: 80, value: 480 },
+  { label: "Causes for Donation", start: 5800, value: 6208 },
+  { label: "Happy People", start: 560, value: 960 },
 ];
 
 const StatBox = ({ label, value, start }) => {
   const [count, setCount] = useState(start);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef();
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          animateCount();
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const animateCount = () => {
     const duration = 2000;
-    const totalSteps = value - start;
-    const incrementTime = totalSteps > 0 ? duration / totalSteps : duration;
+    const steps = value - start;
+    const incrementTime = steps > 0 ? duration / steps : duration;
 
+    let current = start;
     const interval = setInterval(() => {
-      setCount((prev) => {
-        if (prev < value) return prev + 1;
-        clearInterval(interval);
-        return value;
-      });
+      current++;
+      setCount(current);
+      if (current >= value) clearInterval(interval);
     }, incrementTime);
-
-    return () => clearInterval(interval);
-  }, [value, start]);
+  };
 
   return (
-    <div className="flex-1 min-w-[250px] text-center px-6 py-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+    <div
+      ref={ref}
+      className="flex-1 min-w-[250px] text-center px-6 py-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300"
+    >
       <h2 className="text-5xl sm:text-6xl font-extrabold text-white drop-shadow tracking-wide">
         {count}
       </h2>
@@ -143,16 +218,10 @@ const StatBox = ({ label, value, start }) => {
 
 const StatsCounter = () => {
   return (
-    <div className="mt-6 mb-10 relative px-4 py-10 bg-gray-900 rounded-t-[5rem] sm:rounded-full max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-6 sm:gap-8 shadow-2xl overflow-hidden">
+    <div className="mt-6 mb-10 relative px-4 py-10 bg-gray-700 rounded-t-[5rem] sm:rounded-full max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-6 sm:gap-8 shadow-2xl overflow-hidden">
       <div className="absolute inset-0 opacity-10 bg-[url('/bg-pattern.svg')] bg-cover bg-center pointer-events-none rounded-t-[5rem] sm:rounded-full" />
-      
       {stats.map((item, index) => (
-        <StatBox
-          key={index}
-          label={item.label}
-          value={item.value}
-          start={item.start}
-        />
+        <StatBox key={index} {...item} />
       ))}
     </div>
   );
