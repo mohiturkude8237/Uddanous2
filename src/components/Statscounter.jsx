@@ -292,7 +292,7 @@ const StatBox = ({ label, value, start }) => {
 
 const StatsCounter = () => {
   return (
-    <div className="mt-8 mb-10 relative px-4 py-10 bg-gradient-to-r from-red-500 to-yellow-500 rounded-t-[5rem] sm:rounded-full ml-auto w-full flex flex-wrap justify-center items-center gap-6 sm:gap-8 shadow-2xl overflow-hidden md:rounded-r-xl md:pl-10 md:px-4 md:py-12 md:ml-6 md:pr-14">
+    <div className="mt-8 mb-10 relative px-4 py-10 bg-gradient-to-r from-red-700 to-gray-800 rounded-t-[5rem] sm:rounded-full ml-auto w-full flex flex-wrap justify-center items-center gap-6 sm:gap-8 shadow-2xl overflow-hidden md:rounded-r-xl md:pl-10 md:px-4 md:py-12 md:ml-6 md:pr-14">
       {/* Optional Background Pattern */}
       <div className="absolute inset-0 opacity-10 bg-[url('/bg-pattern.svg')] bg-cover bg-center pointer-events-none rounded-t-[5rem] sm:rounded-full" />
       
